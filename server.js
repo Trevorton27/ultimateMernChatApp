@@ -1,20 +1,37 @@
 const express = require('express');
-const app = require('express');
-const server = require('http').Server(app);
+const app = express();
+
+// OLD VERSION taught in the course.
+// const server = require("http").Server(app);
+// const io = require("socket.io")(server);
+
+// LATEST VERSION Socket io @4.4.1
+const { createServer } = require('http');
+const { Server } = require('socket.io');
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  /* options */
+});
+
 const next = require('next');
 const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
-require('dotenv').config({ path: './config.env' });
+require('dotenv').config();
 const connectDb = require('./serverUtilities/connectDb');
 
 connectDb();
 app.use(express.json());
-const PORT = process.env.PORT || 3000;
 
-app.all('*', (req, res) => handle(req, res));
+nextApp.prepare().then(() => {
+  app.use('/api/signup', require('./api/signup'));
+  app.use('/api/auth', require('./api/auth'));
+  const PORT = process.env.PORT || 3000;
 
-server.listen(PORT, (err) => {
-  if (err) throw err;
-  console.log(`Express server running ${PORT}`);
+  app.all('*', (req, res) => handle(req, res));
+
+  httpServer.listen(PORT, (err) => {
+    if (err) throw err;
+    console.log(`Express server running ${PORT}`);
+  });
 });
