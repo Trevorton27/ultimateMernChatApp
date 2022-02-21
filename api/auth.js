@@ -1,37 +1,33 @@
 const express = require('express');
 const router = express.Router();
 const UserModel = require('../models/UserModel');
-//const FollowerModel = require("../models/FollowerModel");
+const FollowerModel = require('../models/FollowerModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const isEmail = require('validator/lib/isEmail');
-//const authMiddleware = require("../middleware/authMiddleware");
+const authMiddleware = require('../middleware/authMiddleware');
 
-// router.get("/", authMiddleware, async (req, res) => {
-//   const { userId } = req;
-//   let { getFollowingData } = req.query;
-//   getFollowingData = JSON.parse(getFollowingData);
+router.get('/', authMiddleware, async (req, res) => {
+  const { userId } = req;
+  // let { getFollowingData } = req.query;
+  /// getFollowingData = JSON.parse(getFollowingData);
 
-//   try {
-//     const user = await UserModel.findById(userId);
-//     if (!user) {
-//       return res.status(404).send("User not found");
-//     }
+  try {
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
 
-//     let userFollowStats;
+    //let userFollowStats;
 
-//     if (getFollowingData) {
-//       userFollowStats = await FollowerModel.findOne({ user: userId }).select(
-//         "-followers"
-//       );
-//     }
-
-//     return res.status(200).json({ user, userFollowStats });
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).send(`Server error`);
-//   }
-// });
+    //if (getFollowingData) {
+    const userFollowStats = await FollowerModel.findOne({ user: userId });
+    return res.status(200).json({ user, userFollowStats });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send(`Server error`);
+  }
+});
 
 router.post('/', async (req, res) => {
   const { email, password } = req.body.user;
@@ -39,7 +35,7 @@ router.post('/', async (req, res) => {
   if (!isEmail(email)) return res.status(401).send('Invalid Email');
 
   if (password.length < 6) {
-    return res.status(401).send('Password must be atleast 6 characters');
+    return res.status(401).send('Password must be at　least　6 characters');
   }
 
   try {

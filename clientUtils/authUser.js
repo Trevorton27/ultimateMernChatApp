@@ -44,7 +44,7 @@ export const redirectUser = (ctx, location) => {
 };
 
 const setToken = (token) => {
-  cookie.set('authToken', token);
+  cookie.set('token', token);
   window.location.href = '/';
 };
 

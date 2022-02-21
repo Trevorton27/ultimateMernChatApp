@@ -140,7 +140,7 @@ function Signup() {
             onChange={handleChange}
             fluid
             icon='user'
-            iconPosition='right'
+            //iconPosition='right'
           />
 
           <Form.Input
@@ -152,7 +152,7 @@ function Signup() {
             onChange={handleChange}
             fluid
             icon='envelope'
-            iconPosition='right'
+            //iconPosition='right'
             type='email'
           />
 
@@ -169,7 +169,7 @@ function Signup() {
               link: true,
               onClick: () => setShowPassword(!showPassword)
             }}
-            iconPosition='right'
+            //iconPosition='right'
             type={showPassword ? 'text' : 'password'}
             required
           />
@@ -191,7 +191,7 @@ function Signup() {
             }}
             fluid
             icon={usernameAvailable ? 'check' : 'close'}
-            iconPosition='right'
+            // iconPosition='right'
           />
 
           <Bio

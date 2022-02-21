@@ -37,6 +37,13 @@ function Login() {
 
     await loginUser(user, setErrorMsg, setFormLoading);
   };
+
+  useEffect(() => {
+    document.title = 'Welcome Back';
+    const userEmail = cookie.get('userEmail');
+    if (userEmail) setUser((prev) => ({ ...prev, email: userEmail }));
+  }, []);
+
   return (
     <>
       <HeaderMessage />
@@ -62,7 +69,7 @@ function Login() {
             onChange={handleChange}
             fluid
             icon='envelope'
-            iconPosition='right'
+            // iconPosition='right'
             type='email'
           />
 
@@ -79,7 +86,7 @@ function Login() {
               link: true,
               onClick: () => setShowPassword(!showPassword)
             }}
-            iconPosition='right'
+            //iconPosition='right'
             type={showPassword ? 'text' : 'password'}
             required
           />
