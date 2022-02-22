@@ -9,11 +9,9 @@ router.get('/:searchText', authMiddleware, async (req, res) => {
     const { userId } = req;
     if (searchText.length === 0) return;
 
-    let userInput = new RegEx(`^${searchText}`);
-
     const results = await UserModel.find({
-      name: { $regex: userInput, $options: 'i' }
-      //$nor: [{ _id: userId }]
+      name: { $regex: searchText, $options: 'i' },
+      $nor: [{ _id: userId }]
     });
 
     return res.status(200).json(results);

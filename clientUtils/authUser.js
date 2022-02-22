@@ -2,6 +2,7 @@ import axios from 'axios';
 import baseUrl from './baseUrl';
 import catchErrors from './catchErrors';
 import cookie from 'js-cookie';
+import Router from 'next/router';
 
 export const registerUser = async (
   user,
@@ -39,17 +40,18 @@ export const redirectUser = (ctx, location) => {
     ctx.res.writeHead(302, { Location: location });
     ctx.res.end();
   } else {
-    window.location.href = location;
+    Router.push(location);
   }
 };
 
 const setToken = (token) => {
   cookie.set('token', token);
-  window.location.href = '/';
+  Router.push('/');
 };
 
 export const logoutUser = (email) => {
   cookie.set('userEmail', email);
   cookie.remove('token');
-  window.location.href = '/login';
+  Router.push('/login');
+  Router.reload();
 };

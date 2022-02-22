@@ -5,8 +5,7 @@ import { useRouter } from 'next/router';
 import { logoutUser } from '../../clientUtils/authUser';
 
 function SideMenu({
-  user: { unreadNotification, email, unreadMessage, username },
-  pc = true
+  user: { unreadNotification, email, unreadMessage, username }
 }) {
   const router = useRouter();
 
@@ -27,7 +26,9 @@ function SideMenu({
               size='large'
               {...(isActive('/') && { color: 'blue' })}
             />
-            <List.Content>{pc && <List.Header content='Home' />}</List.Content>
+            <List.Content>
+              <List.Header content='Home' />
+            </List.Content>
           </List.Item>
         </Link>
         <br />
@@ -39,7 +40,7 @@ function SideMenu({
               {...(router.query.username === username && { color: 'blue' })}
             />
             <List.Content>
-              {pc && <List.Header content='Account' />}
+              <List.Header content='Account' />
             </List.Content>
           </List.Item>
         </Link>
@@ -52,7 +53,7 @@ function SideMenu({
               (unreadMessage && { color: 'red' }))}
           />
           <List.Content>
-            {pc && <List.Header content='Messages' />}
+            <List.Header content='Messages' />
           </List.Content>
         </List.Item>
         <br />
@@ -65,14 +66,17 @@ function SideMenu({
                 (unreadNotification && { color: 'red' }))}
             />
             <List.Content>
-              {pc && <List.Header content='Notifications' />}
+              <List.Header content='Notifications' />
             </List.Content>
           </List.Item>
         </Link>
         <br />
         <List.Item onClick={() => logoutUser(email)}>
           <Icon name='log out' size='large' />
-          <List.Content>{pc && <List.Header content='Logout' />}</List.Content>
+          <List.Content>
+            {' '}
+            <List.Header content='Logout' />
+          </List.Content>
         </List.Item>
       </List>
     </>
