@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
       return res.status(401).send(`Unauthorized`);
     }
 
-    console.log('request in middleware: ', req.headers.authorization);
+    console.log('token: ', req.headers.authorization);
     const { userId } = jwt.verify(
       req.headers.authorization,
       process.env.jwtSecret

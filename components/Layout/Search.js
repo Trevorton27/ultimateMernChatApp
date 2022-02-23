@@ -13,9 +13,8 @@ function SearchComponent() {
 
   const handleChange = async (e) => {
     const { value } = e.target;
-    setText(value);
 
-    if (value.length === 0) return;
+    if (value.length === 0) return setText(value);
     if (value.trim().length === 0) return;
 
     setText(value);
@@ -49,6 +48,16 @@ function SearchComponent() {
   useEffect(() => {
     if (text.length === 0 && loading) setLoading(false);
   }, [text]);
+  const ResultRenderer = ({ _id, profilePicUrl, name }) => {
+    return (
+      <List key={_id}>
+        <List.Item>
+          <Image src={profilePicUrl} alt='ProfilePic' avatar />
+          <List.Content header={name} as='a' />
+        </List.Item>
+      </List>
+    );
+  };
 
   return (
     <Search
@@ -67,16 +76,5 @@ function SearchComponent() {
     />
   );
 }
-
-const ResultRenderer = ({ _id, profilePicUrl, name }) => {
-  return (
-    <List key={_id}>
-      <List.Item>
-        <Image src={profilePicUrl} alt='ProfilePic' avatar />
-        <List.Content header={name} as='a' />
-      </List.Item>
-    </List>
-  );
-};
 
 export default SearchComponent;
