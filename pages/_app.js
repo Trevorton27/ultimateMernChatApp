@@ -24,23 +24,23 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
-  }
 
-  try {
-    const res = await axios.get(`${baseUrl}/api/auth`, {
-      headers: { Authorization: token }
-    });
-
-    const { user, userFollowStats } = res.data;
-
-    if (user) !protectedRoutes && redirectUser(ctx, "/");
-
-    pageProps.user = user;
-    pageProps.userFollowStats = userFollowStats;
-  } catch (error) {
-    destroyCookie(ctx, "token");
-    redirectUser(ctx, "/login");
-  }
+    try {
+      const res = await axios.get(`${baseUrl}/api/auth`, {
+        headers: { Authorization: token }
+      });
+  
+      const { user, userFollowStats } = res.data;
+  
+      if (user) !protectedRoutes && redirectUser(ctx, "/");
+  
+      pageProps.user = user;
+      pageProps.userFollowStats = userFollowStats;
+    } catch (error) {
+      destroyCookie(ctx, "token");
+      redirectUser(ctx, "/login");
+    }
+  } 
 
   return { pageProps };
 };
