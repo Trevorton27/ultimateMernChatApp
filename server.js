@@ -27,6 +27,7 @@ nextApp.prepare().then(() => {
   app.use('/api/signup', require('./api/signup'));
   app.use('/api/auth', require('./api/auth'));
   app.use('/api/search', require('./api/search'));
+  app.use('/api/post', require('./api/post'));
   const PORT = process.env.PORT || 3000;
 
   app.all('*', (req, res) => handle(req, res));
